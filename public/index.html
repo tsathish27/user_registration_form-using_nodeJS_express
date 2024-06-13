@@ -1,0 +1,76 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1 class="heading">User Registration Form</h1>
+    <form action="/app.js" class="form" method="post">
+        <input type = "text" name = "Firstname" placeholder = "Enter your first name" required>
+        <input type = "text" name = "Lastname" placeholder = "Enter your last name" required>
+        <input type = "email" name = "email" placeholder = "Enter your email" required>
+        <input type = "password" name = "password" placeholder = "Enter your password" required>
+        <input type="number" name="age" placeholder="Enter your age" required>
+        <button type = "submit">Register</button>
+    </form>
+
+    
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1 class="heading">User Registration Form</h1>
+    <form class="form" method="post">
+        <input type="text" name="Firstname" placeholder="Enter your first name" required>
+        <input type="text" name="Lastname" placeholder="Enter your last name" required>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <input type="number" name="age" placeholder="Enter your age" required>
+        <button type="submit">Register</button>
+    </form>
+    
+    <div id="message" class="message"></div>
+
+    <script>
+        const form = document.querySelector('.form');
+        const messageDiv = document.getElementById('message');
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            fetch('/formPost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.textContent = 'Success: Form submission received';
+                messageDiv.style.color = 'green';
+            })
+            .catch((error) => {
+                messageDiv.textContent = 'Error: Form submission failed';
+                messageDiv.style.color = 'red';
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
